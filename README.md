@@ -1,4 +1,5 @@
-# Webpack Starter Kit
+# Travel-dash
+Using fetch APIs, this app creates a homing station for your travels and adventures.
 
 ## Clone This Repo
 
