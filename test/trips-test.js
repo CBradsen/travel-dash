@@ -4,7 +4,7 @@ import Travelers from '../src/travelers';
 import clients from '../src/client-list';
 import Trips from '../src/trips';
 import tripData from '../src/trips-sample-data';
-import destinations from '../src/sample-destination-data'
+import destinations from './sample-destination-data'
 
 
 describe('Trips', function() {
@@ -14,14 +14,24 @@ describe('Trips', function() {
 
   let myTrips;
   beforeEach(() => {
-    myTrips = new Trips(destinationData, tripData, 43)
+    myTrips = new Trips(destinations, tripData, 43)
   })
 
   it('should return a users past trips based on userID', () => {
     const userID = 43
     const user43trips = myTrips.getPastTrips(userID)
 
-    expect(user43trips).to.equal(
+    expect(user43trips).to.deep.equal(
+[{
+id: 4,
+userID: 43,
+destinationID: 14,
+travelers: 2,
+date: "2022/02/25",
+duration: 10,
+status: "approved",
+suggestedActivities: [ ]
+},
 {
 id: 27,
 userID: 43,
@@ -32,16 +42,7 @@ duration: 5,
 status: "approved",
 suggestedActivities: [ ]
 },
-{
-id: 4,
-userID: 43,
-destinationID: 14,
-travelers: 2,
-date: "2022/02/25",
-duration: 10,
-status: "approved",
-suggestedActivities: [ ]
-}
+]
 );
   })
 

@@ -1,4 +1,5 @@
-import tripData from '../src/trips-sample-data'
+import tripData from '../src/trips-sample-data';
+import destinations from '../test/sample-destination-data';
 
 class Trips {
   constructor(destinationData, tripData, userID) {
@@ -8,8 +9,8 @@ class Trips {
   }
 
   getPastTrips(userID) {
-    return this.tripData.filter(trip => trip.userID === userID )
-
+    return (this.tripData.filter(trip => trip.userID === userID ))
+    
   }
 
   getUpcomingTripsAll() {
