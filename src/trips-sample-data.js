@@ -1,4 +1,4 @@
-{
+export default {
 trips: [
 {
 id: 1,
@@ -572,4 +572,3 @@ suggestedActivities: [ ]
 }
 ]
 }
-export default tripData;
