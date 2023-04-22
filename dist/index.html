@@ -4,10 +4,46 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Starter Kit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <title>Let's Go Travel Adventures</title>
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
+  
+  <header>
+    <h1>Let's go travel!</h1>
+    <img src="./images/lets-go-travel.jpg" id="login-img" alt="woman with backpack walking a mountain trail taken by nina uhlikova">
+  </header>
+  <main>
+    <div>
+      <h2>My Future Trips</h2>
+      <table class="trip-table" id="future-trips">
+        <thead>
+          <th>Dates</th>
+          <th>City</th>
+          <th>Days</th>
+          <th>Party</th>
+          <th>Status</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>  
+    <div>
+      <h2>My Past Trips</h2>
+      <table class="trip-table" id="past-trips">
+        <thead>
+          <th>Dates</th>
+          <th>City</th>
+          <th>Days</th>
+          <th>Party</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </main>
   
   <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
