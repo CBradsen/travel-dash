@@ -1,6 +1,6 @@
 import tripData from '../src/trips-sample-data';
 import destinations from '../test/sample-destination-data';
-import utility from './src/utility'
+import { getCurrentDate, formatDate } from './utility';
 
 class Trips {
   constructor(destinations, tripData, userID) {
@@ -12,9 +12,9 @@ class Trips {
 // console.log(this.destinationData);
 
   getPastTrips(userID) {
-    c
-    return (this.tripData.filter(trip => trip.userID === userID && trip.date < getCurrentDate()))
-    
+   const now = getCurrentDate();
+   return (this.tripData.filter(trip => trip.userID === userID && trip.date < now))
+   
   }
 
   getDestination(destinationID) {
@@ -24,7 +24,8 @@ class Trips {
   }
 
   getFutureTripsAll(userID) {
-
+    const now = getCurrentDate();
+    return (this.tripData.filter(trip => trip.userID === userID && trip.date > now))
 
   }
 
