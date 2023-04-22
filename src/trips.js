@@ -12,8 +12,8 @@ class Trips {
 // console.log(this.destinationData);
 
   getPastTrips(userID) {
-    const now = getCurrentDate()
-    return (this.tripData.filter(trip => trip.userID === userID && trip.date < now))
+    c
+    return (this.tripData.filter(trip => trip.userID === userID && trip.date < getCurrentDate()))
     
   }
 
