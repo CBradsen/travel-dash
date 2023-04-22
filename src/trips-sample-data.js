@@ -579,6 +579,18 @@ date: "2023/07/04",
 duration: 20,
 status: "approved",
 suggestedActivities: [ ]
-}
+},
+{
+id: 59,
+userID: 33,
+destinationID: 18,
+travelers: 2,
+date: "2023/09/04",
+duration: 5,
+status: "pending",
+suggestedActivities: [ ]
+},
+
+
 ]
 }
