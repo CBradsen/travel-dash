@@ -1,11 +1,18 @@
 body {
   background: radial-gradient(circle, rgb(200, 206, 233) 0%, rgb(236, 245, 243) 100%);
   font-family: 'Atkinson Hyperlegible', sans-serif;
- 
 }
+
+main (
+  
+)
 
 #login-img {
   width: 15%;
+}
+
+#booking-form {
+  max-width: 30%;
 }
 
 .trip-table {

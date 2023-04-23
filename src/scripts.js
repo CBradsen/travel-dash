@@ -15,13 +15,30 @@ import './images/turing-logo.png'
 import './images/lets-go-travel.jpg'
 
 // Event Listeners
-document.addEventListener("DOMContentLoaded", function() {
-  getTravelerData(travelerID);
-});
+
+document.getElementById('destination').addEventListener('change', updateEstimatedCost);
+document.getElementById('start-date').addEventListener('change', updateEstimatedCost);
+document.getElementById('travelers').addEventListener('input', updateEstimatedCost);
+document.getElementById('duration').addEventListener('input', updateEstimatedCost);
+
+
 document.addEventListener('DOMContentLoaded', function() {
   M.AutoInit();
 });
+document.addEventListener('DOMContentLoaded', function() {
+  M.AutoInit();
+
+  var elems = document.querySelectorAll('.datepicker');
+  var options = {
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    minDate: new Date(),
+  };
+  var instances = M.Datepicker.init(elems, options);
+});
+
 document.getElementById('booking-form').addEventListener('submit', processBookTripForm);
+
 
 
 // Document Selectors
@@ -42,21 +59,29 @@ let travelerID = 22;
 let travelerName; 
 let trips;
 
+document.addEventListener("DOMContentLoaded", function() {
+  getTravelerData(travelerID)
+   .then(([allTravelersData, travelerData, destinationData, tripsData ]) => {
+    travelerID = 22
+    travelers = new Travelers(allTravelersData)
+    trips = new Trips(destinationData, tripsData, travelerID)
+    travelers.travelerID = travelerID
 
-getTravelerData(travelerID)
-  .then(([allTravelersData, travelerData, destinationData, tripsData ]) => {
+    renderWelcome();
+    renderPastTrips(travelerID);
+    renderFutureTrips(travelerID);
+    renderAmountSpent(travelerID);
+    autoFillBookTripForm();
+   
+
+});
+});
+
+function renderPastTrips(travelerID) {
+  pastTripsTable.innerHTML = '';
+  const usersPastTrips = trips.getPastTrips(travelerID)
   
-const travelers = new Travelers(allTravelersData)
-const trips = new Trips(destinationData, tripsData, travelerID)
-
-travelers.travelerID = travelerID
-travelers.getTravelersFullName()
-const firstName = travelers.getTravelersFirstName()
-welcomeName.innerHTML = `Let's go travel, ${firstName}!`
-
-const usersPastTrips = trips.getPastTrips(travelerID);
-pastTripsTable.innerHTML = '';
-usersPastTrips.forEach((trip) => { 
+  usersPastTrips.forEach((trip) => { 
   const newPastRow = pastTripsTable.insertRow();
   const dateCell = newPastRow.insertCell(0);
   const cityCell = newPastRow.insertCell(1);
@@ -67,11 +92,14 @@ usersPastTrips.forEach((trip) => {
   cityCell.innerHTML = trips.getDestination(trip.destinationID);
   daysCell.innerHTML = trip.duration;
   partyCell.innerHTML = trip.travelers;
-})
 
-const usersFutureTrips = trips.getFutureTripsAll(travelerID);
-futureTripsTable.innerHTML = '';
-usersFutureTrips.forEach((trip) => {
+}) 
+};
+
+function renderFutureTrips(travelerID) {
+  const usersFutureTrips = trips.getFutureTripsAll(travelerID);
+  futureTripsTable.innerHTML = '';
+  usersFutureTrips.forEach((trip) => {
   const newFutureRow = futureTripsTable.insertRow();
   const dateCell = newFutureRow.insertCell(0);
   const cityCell = newFutureRow.insertCell(1);
@@ -86,54 +114,61 @@ usersFutureTrips.forEach((trip) => {
   statusCell.innerHTML = trip.status;
 
 })
+};
 
-const amount = trips.calculateLastYearTotalClient(travelerID)
+function renderWelcome() {
+  travelers.getTravelersFullName()
+  const firstName = travelers.getTravelersFirstName()
+  welcomeName.innerHTML = `Let's go travel, ${firstName}!`
+}
+
+function renderAmountSpent(travelerID) {
+  const amount = trips.calculateLastYearTotalClient(travelerID)
 console.log(amount)
-amountSpent.innerHTML = `You spent $${amount} traveling in 2022`
+  amountSpent.innerHTML = `You spent $${amount} traveling in 2022`
+}
 
-function bookNewTrip() {
+function autoFillBookTripForm() {
   userNameForm.value = travelers.getTravelersFullName()
-  trips.destinationData.forEach((destination) => {
-    const cities = document.createElement('cities');
+  userNameForm.nextElementSibling.classList.add('active');
+
+  trips.destinationData.sort((a, b) => {
+    return a - b
+  }).forEach((destination) => {
+    const cities = document.createElement('option');
       cities.value = destination.id;
       cities.textContent = destination.destination;
       destinationOptions.appendChild(cities);
-  });
+  })
+  
   M.FormSelect.init(destinationOptions);
-}
+};
 
 function processBookTripForm(event) {
-  event.preventDefalut();
+  event.preventDefault();
 
+  const destinationIdNewTrip = parseInt(document.getElementById('destination').value);
+  const startDate = document.getElementById('start-date').value;
+  const travelersParty = document.getElementById('travelers').value;
+  const daysNewTrip = document.getElementById('duration').value; 
+  const estimatedCost = trips.estimateTripCost(destinationIdNewTrip, travelersParty, daysNewTrip);
+  document.getElementById('estimated-cost').value = `${estimatedCost}`
+  
+  
 }
 
-  })
+function updateEstimatedCost() {
+  
+  const destinationIdNewTrip = parseInt(document.getElementById('destination').value);
+  const travelersParty = document.getElementById('travelers').value;
+  const daysNewTrip = document.getElementById('duration').value;
+  const estimatedCost = trips.estimateTripCost(destinationIdNewTrip, travelersParty, daysNewTrip);
+  document.getElementById('estimated-cost').value = `$${estimatedCost}`;
+  
+}
 
-// function makeNewClassInstances(allTravelersData, travelerData, destinationData, tripsData, travelerID) {
-// // travelers = new Travelers(allTravelersData)
-// // travelerName = travelers.getTravelersFirstName()
-// // trips = new Trips(destinationData, tripsData, travelerID)
-// }
 
-// function renderPastTrips(travelerID) {
-// const usersPastTrips = trips.getPastTrips(travelerID);
 
-// pastTripsTable.innerHTML = '';
 
-// usersPastTrips.forEach((trip) => { 
-// const newPastRow = pastTripsTable.insertRow();
-// const dateCell = newPastRow.insertCell(0);
-// const cityCell = newPastRow.insertCell(1);
-// const daysCell = newPastRow.insertCell(2);
-// const partyCell = newPastRow.insertCell(3);
 
-// dateCell.innerHTML = trip.date;
-// cityCell.innerHTML = trips.getDestination(trip.destinationID);
-// daysCell.innerHTML = trip.duration;
-// partyCell.innerHTML = trip.travelers;
-// })
-// }
 
-// function renderWelcome(travelerName) {
-//   welcomeName.innerHTML = `Let's go travel, ${travelerName}!`
-// }
