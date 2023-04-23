@@ -1,6 +1,7 @@
 body {
   background: radial-gradient(circle, rgb(200, 206, 233) 0%, rgb(236, 245, 243) 100%);
   font-family: 'Atkinson Hyperlegible', sans-serif;
+ 
 }
 
 #login-img {
@@ -8,26 +9,27 @@ body {
 }
 
 .trip-table {
-  border: .09em solid;
+  border: .09rem solid;
   border-color:rgb(26, 9, 9);
   border-collapse: collapse;
+  max-width: 50%
 }
 
 th, td {
   text-align: left;
-  border: .09em solid;
+  border: .09rem solid;
   border-color:rgb(26, 9, 9);
-  padding-right: .6em;
-  padding-left: .3em;
+  padding-right: .6rem;
+  padding-left: .3rem;
   border-collapse: collapse;
 }
 
 th {
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 400;
 }
 
 td {
- font-size: .7em;
+ font-size: .7rem;
  font-weight: 200;
 }
