@@ -3,9 +3,10 @@
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
-import { getTravelerData, handleResponse } from './api-calls' 
+import { getTravelerData, handleResponse } from './api-calls';
 import Travelers from './travelers';
 import Trips from './trips';
+import { getCurrentDate, formatDate } from './utility';
 
 import 'materialize-css/dist/js/materialize.min.js';
 import 'materialize-css/dist/css/materialize.min.css';
@@ -58,6 +59,7 @@ let travelers;
 let travelerID = 22;
 let travelerName; 
 let trips;
+let tripsLength;
 
 document.addEventListener("DOMContentLoaded", function() {
   getTravelerData(travelerID)
@@ -66,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
     travelers = new Travelers(allTravelersData)
     trips = new Trips(destinationData, tripsData, travelerID)
     travelers.travelerID = travelerID
+    tripsLength = tripsData.trips.length;
 
     renderWelcome();
     renderPastTrips(travelerID);
@@ -133,7 +136,7 @@ function autoFillBookTripForm() {
   userNameForm.nextElementSibling.classList.add('active');
 
   trips.destinationData.sort((a, b) => {
-    return a - b
+    return a.destination - b.destination
   }).forEach((destination) => {
     const cities = document.createElement('option');
       cities.value = destination.id;
@@ -148,26 +151,52 @@ function processBookTripForm(event) {
   event.preventDefault();
 
   const destinationIdNewTrip = parseInt(document.getElementById('destination').value);
-  const startDate = document.getElementById('start-date').value;
+  const startDate = formatDate(document.getElementById('start-date').value);
+  
   const travelersParty = document.getElementById('travelers').value;
   const daysNewTrip = document.getElementById('duration').value; 
   const estimatedCost = trips.estimateTripCost(destinationIdNewTrip, travelersParty, daysNewTrip);
   document.getElementById('estimated-cost').value = `${estimatedCost}`
   
-  
+  const requestedTripData = {
+    id: tripsLength += 1,
+    userID: travelerID,
+    destinationID: destinationIdNewTrip,
+    travelers: travelersParty,
+    date: startDate,
+    duration: daysNewTrip,
+    status: "pending",
+    suggestedActivities: []
+  }
+  console.log(requestedTripData)
+  submitNewTrip(requestedTripData)
 }
 
 function updateEstimatedCost() {
-  
   const destinationIdNewTrip = parseInt(document.getElementById('destination').value);
   const travelersParty = document.getElementById('travelers').value;
   const daysNewTrip = document.getElementById('duration').value;
   const estimatedCost = trips.estimateTripCost(destinationIdNewTrip, travelersParty, daysNewTrip);
-  document.getElementById('estimated-cost').value = `$${estimatedCost}`;
-  
+  document.getElementById('estimated-cost').value = `$${estimatedCost}`; 
 }
 
+function submitNewTrip(requestedTripData) {
+  fetch("http://localhost:3001/api/v1/trips", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestedTripData),
 
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("New trip was successfully posted", data)
+  })
+  .catch((error) => {
+    console.error('Error', error);
+  })
+}
 
 
 
