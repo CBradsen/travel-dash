@@ -7,6 +7,9 @@ import { getTravelerData, handleResponse } from './api-calls'
 import Travelers from './travelers';
 import Trips from './trips';
 
+import 'materialize-css/dist/js/materialize.min.js';
+import 'materialize-css/dist/css/materialize.min.css';
+
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import './images/lets-go-travel.jpg'
@@ -15,18 +18,29 @@ import './images/lets-go-travel.jpg'
 document.addEventListener("DOMContentLoaded", function() {
   getTravelerData(travelerID);
 });
+document.addEventListener('DOMContentLoaded', function() {
+  M.AutoInit();
+});
+document.getElementById('booking-form').addEventListener('submit', processBookTripForm);
 
 
 // Document Selectors
 const pastTripsTable = document.querySelector('#past-trips tbody');
 const futureTripsTable = document.querySelector('#future-trips tbody');
 const welcomeName = document.querySelector('h1');
+const amountSpent = document.querySelector('#amount-spent');
+const destinationsForm = document.querySelector('select');
+  M.FormSelect.init(destinationsForm);
+const calendarForm = document.querySelector('.datepicker');
+  M.Datepicker.init(calendarForm);
+const userNameForm = document.querySelector('#user-name');
+const destinationOptions = document.querySelector('#destination')
 
 // global variables
-// let travelers;
-let travelerID = 49;
-// let travelerName; 
-// let trips;
+let travelers;
+let travelerID = 22;
+let travelerName; 
+let trips;
 
 
 getTravelerData(travelerID)
@@ -72,6 +86,26 @@ usersFutureTrips.forEach((trip) => {
   statusCell.innerHTML = trip.status;
 
 })
+
+const amount = trips.calculateLastYearTotalClient(travelerID)
+console.log(amount)
+amountSpent.innerHTML = `You spent $${amount} traveling in 2022`
+
+function bookNewTrip() {
+  userNameForm.value = travelers.getTravelersFullName()
+  trips.destinationData.forEach((destination) => {
+    const cities = document.createElement('cities');
+      cities.value = destination.id;
+      cities.textContent = destination.destination;
+      destinationOptions.appendChild(cities);
+  });
+  M.FormSelect.init(destinationOptions);
+}
+
+function processBookTripForm(event) {
+  event.preventDefalut();
+
+}
 
   })
 

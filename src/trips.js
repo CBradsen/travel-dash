@@ -68,7 +68,7 @@ class Trips {
   const totalCostYear = pastYearTrips.reduce((acc, trip) => {
   acc += this.calculateTotalPerTrip(trip.destinationID, trip.travelers, trip.duration)
 
-  return acc
+  return Math.round(acc)
   }, 0)
 return totalCostYear
   }
