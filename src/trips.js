@@ -38,9 +38,7 @@ class Trips {
       console.log("No future trips found.")
       return "No future trips found."
     }
-
     return futureTrips
-
   }
 
   getPendingTrips(userID) {
@@ -50,7 +48,6 @@ class Trips {
       return "No pending trips found."
     }
    return (pendingTrips)
-  
   }
 
   calculateTotalPerTrip(destinationID, travelers, duration) {
