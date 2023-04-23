@@ -1,3 +1,33 @@
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  background: radial-gradient(circle, rgb(200, 206, 233) 0%, rgb(236, 245, 243) 100%);
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+}
+
+#login-img {
+  width: 15%;
+}
+
+.trip-table {
+  border: .09em solid;
+  border-color:rgb(26, 9, 9);
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  border: .09em solid;
+  border-color:rgb(26, 9, 9);
+  padding-right: .6em;
+  padding-left: .3em;
+  border-collapse: collapse;
+}
+
+th {
+  font-size: 1em;
+  font-weight: 400;
+}
+
+td {
+ font-size: .7em;
+ font-weight: 200;
 }
