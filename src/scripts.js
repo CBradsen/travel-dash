@@ -1,5 +1,4 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
+
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
@@ -7,9 +6,6 @@ import { getTravelerData, handleResponse } from './api-calls';
 import Travelers from './travelers';
 import Trips from './trips';
 import { getCurrentDate, formatDate } from './utility';
-
-import 'materialize-css/dist/js/materialize.min.js';
-import 'materialize-css/dist/css/materialize.min.css';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
@@ -23,41 +19,30 @@ document.getElementById('travelers').addEventListener('input', updateEstimatedCo
 document.getElementById('duration').addEventListener('input', updateEstimatedCost);
 const bookTripButton = document.getElementById('btn');
 
-
-document.addEventListener('DOMContentLoaded', function() {
-  M.AutoInit();
+document.addEventListener('DOMContentLoaded', function () {
+  const startDate = document.getElementById('start-date');
+  const today = new Date().toISOString().split('T')[0];
+  startDate.setAttribute('min', today);
 });
-document.addEventListener('DOMContentLoaded', function() {
-  M.AutoInit();
 
-  var elems = document.querySelectorAll('.datepicker');
-  var options = {
-    defaultDate: new Date(),
-    setDefaultDate: true,
-    minDate: new Date(),
-  };
-  var instances = M.Datepicker.init(elems, options);
-});
+
 
 document.getElementById('booking-form').addEventListener('submit', processBookTripForm);
 
-
-
-// Document Selectors
 const pastTripsTable = document.querySelector('#past-trips tbody');
 const futureTripsTable = document.querySelector('#future-trips tbody');
 const welcomeName = document.querySelector('h1');
 const amountSpent = document.querySelector('#amount-spent');
 const destinationsForm = document.querySelector('select');
-  M.FormSelect.init(destinationsForm);
+
 const calendarForm = document.querySelector('.datepicker');
-  M.Datepicker.init(calendarForm);
+
 const userNameForm = document.querySelector('#user-name');
 const destinationOptions = document.querySelector('#destination')
 
 // global variables
 let travelers;
-let travelerID = 41;
+let travelerID = 16;
 let travelerName; 
 let trips;
 let tripsLength;
@@ -65,11 +50,12 @@ let tripsLength;
 document.addEventListener("DOMContentLoaded", function() {
   getTravelerData(travelerID)
    .then(([allTravelersData, travelerData, destinationData, tripsData ]) => {
-    travelerID = 11;
+    travelerID = 18;
     travelers = new Travelers(allTravelersData);
     trips = new Trips(destinationData, tripsData, travelerID);
     travelers.travelerID = travelerID;
     tripsLength = tripsData.trips.length;
+// console.log(allTravelersData, travelerData, destinationData, tripsData)
 
     renderWelcome();
     renderPastTrips(travelerID);
@@ -80,6 +66,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 });
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   const selectElement = document.getElementById('destination');
+
+//   destinations.forEach((destination) => {
+//     const option = document.createElement('option');
+//     option.value = destination;
+//     option.textContent = destination;
+//     selectElement.appendChild(option);
+//   });
+
+//   const destinationInput = document.querySelector('input.select-dropdown');
+//   destinationInput.setAttribute('aria-labelledby', 'destination-label');
+// });
 
 function renderPastTrips(travelerID) {
   pastTripsTable.innerHTML = '';
@@ -138,7 +138,7 @@ function autoFillBookTripForm() {
   userNameForm.nextElementSibling.classList.add('active');
 
   trips.destinationData.sort((a, b) => {
-    return a.destination - b.destination
+    return a.destination.localeCompare(b.destination);
   }).forEach((destination) => {
     const cities = document.createElement('option');
       cities.value = destination.id;
@@ -146,18 +146,18 @@ function autoFillBookTripForm() {
       destinationOptions.appendChild(cities);
   })
   
-  M.FormSelect.init(destinationOptions);
+
 };
 
 function processBookTripForm(event) {
   event.preventDefault();
-  
+ 
   const destinationIdNewTrip = parseInt(document.getElementById('destination').value);
   const startDate = formatDate(document.getElementById('start-date').value);
-  
   const travelersParty = document.getElementById('travelers').value;
   const daysNewTrip = document.getElementById('duration').value; 
   const estimatedCost = trips.estimateTripCost(destinationIdNewTrip, travelersParty, daysNewTrip);
+  
   document.getElementById('estimated-cost').value = `${estimatedCost}`
   
   const requestedTripData = {
@@ -171,9 +171,11 @@ function processBookTripForm(event) {
     suggestedActivities: []
   }
   console.log(requestedTripData)
+  disableSubmitTripButton()
   submitNewTrip(requestedTripData)
-  
-  
+  clearForm()
+  enableSubmitTripButton()
+
 }
 
 function updateEstimatedCost() {
@@ -185,6 +187,7 @@ function updateEstimatedCost() {
 }
 
 function submitNewTrip(requestedTripData) {
+  
   fetch("http://localhost:3001/api/v1/trips", {
     method: 'POST',
     headers: {
@@ -203,11 +206,28 @@ function submitNewTrip(requestedTripData) {
     renderFutureTrips(travelerID);
   })
   .catch((error) => {
-    console.error('Error', error);
+    if (error.message === '422') {
+    alert("We're having a problem gathering your information. Please check your trip requests and try again.")
+    } else {
+    console.error("Error posting the data", error);
+    alert('Error processing your trip request. Please try again later or call the Lets Go! office to have someone help you book your trip. We want to make your next adventure the best yet!');
+    }
   });
 }
 
+ 
+function clearForm() {
+  document.querySelector('#booking-form').reset();
+ 
+}
 
-  
+function disableSubmitTripButton() {
+  document.querySelector('#btn-form').setAttribute('disabled', true);
+  console.log("The button should be disabled now")
+}
+
+function enableSubmitTripButton() {
+    document.querySelector('#btn-form').removeAttribute('disabled');
+  }
 
 
