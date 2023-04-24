@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" rel="stylesheet" href="../src/css/css/materialize.css"  media="screen,projection"/>
+
 
 
   <title>Let's Go Travel Adventures</title>
@@ -26,7 +26,7 @@
         <input type="password" id="password" name="password" class="validate">
         <label for="password">Password</label>
       </div>
-      <button class="btn waves-effect waves-light" type="submit">Submit</button>
+      <button class="btn" type="submit">Submit</button>
     </form>
   </section>
   
@@ -53,41 +53,7 @@
         </tbody>
       </table>
     </div> 
-    <!-- <div>
-      <h2>Book your next adventure!</h2>
-        <form id="booking-form">
-          <label for="booking-form">Where do you want to go?</label>
-          <div class="input-field">
-            <input id="user-name" type="text" class="validate" readonly />
-            <label for="user-name">Your Name</label>
-          </div>
-          <div class="input-field">
-            <label for="destination" class="active">Choose your destination</label>
-            <select id="destination" aria-label="Selected destination" required>
-            </select>
-          </div>
-          <div class="input-field">
-            <input id="start-date" type="text" class="datepicker" required/>
-            <label for="start-date">Departure date</label>
-          </div>
-          <div class="input-field">
-            <input id="duration" type="number" min="1" max="20" required/>
-            <label for="duration">How many days?</label>
-          </div>
-          <div class="input-field">
-            <input id="travelers" type="number" min="1" max="20" />
-            <label for="travelers">How many people?</label>
-          </div>
-          <div class="input-field">
-            <input id="estimated-cost" type="text" readonly />
-            <label for="estimated-cost" class="active">Your estimated Cost</label>
-          </div>
-          <button id="btn-form" class="btn waves-effect waves-light" type="submit" name="action">
-            Let's Go! Book it! 
-          </button>
-        </form> 
-    </div> -->
-
+ 
 <div>
    <h2>Book your next adventure!</h2>
   <form id="booking-form">
@@ -96,28 +62,20 @@
       <input id="user-name" type="text" class="validate" readonly />
       <label for="user-name">Your Name</label>
     </div>
+    <div class="input-field">
+      <label for="destination" id="destination-label">Choose your destination</label>
+      <select id="destination" required aria-labelledby="destination-label">
+        <option value="" disabled selected>Select an option</option>
+      </select>
+    </div>
+
 <div class="input-field">
-  <label for="destination" id="destination-label">Choose your destination</label>
-  <select id="destination" required aria-labelledby="destination-label">
-    <option value="" disabled selected>Select an option</option>
-  </select>
+  <label for="start-date">Departure date</label>
+  <input id="start-date" type="date" name="trip-start" required
+  min="today" max="2025-12-31"/>
 </div>
 
 
-
-
-
-      <!-- <input id="destination" aria-label="selected-destination" required class="select-dropdown dropdown-trigger active" type="text" readonly="true" data-target="select-options-04768534-de3e-caeb-d01a-593d2832503e">
-
-
-form#booking-form > div.input-field > div.select-wrapper > input.select-dropdown
-<input class="select-dropdown dropdown-trigger" type="text" readonly="true" data-target="select-options-04768534-de3e-caeb-d01a-593d2832503e"> -->
-
-    </div>
-    <div class="input-field">
-      <input id="start-date" type="text" class="datepicker" required/>
-      <label for="start-date">Departure date</label>
-    </div>
     <div class="input-field">
       <input id="duration" type="number" min="1" max="20" required/>
       <label for="duration">How many days?</label>
@@ -157,13 +115,7 @@ form#booking-form > div.input-field > div.select-wrapper > input.select-dropdown
   
   <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
-  <script type="text/javascript" src="../src/materialize/js/materialize.js"></script>
-  <script>
-document.addEventListener('DOMContentLoaded', function() {
-  var destinationInput = document.querySelector('input.select-dropdown');
-  destinationInput.setAttribute('aria-labelledby', 'destination-label');
-});
-</script>
+
   </div>
 </body>
 </html>

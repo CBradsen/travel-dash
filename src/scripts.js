@@ -1,5 +1,4 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
+
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
@@ -7,22 +6,6 @@ import { getTravelerData, handleResponse } from './api-calls';
 import Travelers from './travelers';
 import Trips from './trips';
 import { getCurrentDate, formatDate } from './utility';
-
-import 'materialize-css/dist/js/materialize.min.js';
-import 'materialize-css/dist/css/materialize.min.css';
-
-document.addEventListener('DOMContentLoaded', function () {
-  const selectElement = document.getElementById('destination');
-
-  destinations.forEach((destination) => {
-    const option = document.createElement('option');
-    option.value = destination;
-    option.textContent = destination;
-    selectElement.appendChild(option);
-  });
-});
-
-
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
@@ -36,35 +19,24 @@ document.getElementById('travelers').addEventListener('input', updateEstimatedCo
 document.getElementById('duration').addEventListener('input', updateEstimatedCost);
 const bookTripButton = document.getElementById('btn');
 
-
-document.addEventListener('DOMContentLoaded', function() {
-  M.AutoInit();
+document.addEventListener('DOMContentLoaded', function () {
+  const startDate = document.getElementById('start-date');
+  const today = new Date().toISOString().split('T')[0];
+  startDate.setAttribute('min', today);
 });
-document.addEventListener('DOMContentLoaded', function() {
-  M.AutoInit();
 
-  var elems = document.querySelectorAll('.datepicker');
-  var options = {
-    defaultDate: new Date(),
-    setDefaultDate: true,
-    minDate: new Date(),
-  };
-  var instances = M.Datepicker.init(elems, options);
-});
+
 
 document.getElementById('booking-form').addEventListener('submit', processBookTripForm);
 
-
-
-// Document Selectors
 const pastTripsTable = document.querySelector('#past-trips tbody');
 const futureTripsTable = document.querySelector('#future-trips tbody');
 const welcomeName = document.querySelector('h1');
 const amountSpent = document.querySelector('#amount-spent');
 const destinationsForm = document.querySelector('select');
-  M.FormSelect.init(destinationsForm);
+
 const calendarForm = document.querySelector('.datepicker');
-  M.Datepicker.init(calendarForm);
+
 const userNameForm = document.querySelector('#user-name');
 const destinationOptions = document.querySelector('#destination')
 
@@ -78,11 +50,12 @@ let tripsLength;
 document.addEventListener("DOMContentLoaded", function() {
   getTravelerData(travelerID)
    .then(([allTravelersData, travelerData, destinationData, tripsData ]) => {
-    travelerID = 16;
+    travelerID = 18;
     travelers = new Travelers(allTravelersData);
     trips = new Trips(destinationData, tripsData, travelerID);
     travelers.travelerID = travelerID;
     tripsLength = tripsData.trips.length;
+// console.log(allTravelersData, travelerData, destinationData, tripsData)
 
     renderWelcome();
     renderPastTrips(travelerID);
@@ -93,6 +66,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 });
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   const selectElement = document.getElementById('destination');
+
+//   destinations.forEach((destination) => {
+//     const option = document.createElement('option');
+//     option.value = destination;
+//     option.textContent = destination;
+//     selectElement.appendChild(option);
+//   });
+
+//   const destinationInput = document.querySelector('input.select-dropdown');
+//   destinationInput.setAttribute('aria-labelledby', 'destination-label');
+// });
 
 function renderPastTrips(travelerID) {
   pastTripsTable.innerHTML = '';
@@ -159,7 +146,7 @@ function autoFillBookTripForm() {
       destinationOptions.appendChild(cities);
   })
   
-  M.FormSelect.init(destinationOptions);
+
 };
 
 function processBookTripForm(event) {
