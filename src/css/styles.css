@@ -1,5 +1,5 @@
 body {
-  background: radial-gradient(circle, rgb(200, 206, 233) 0%, rgb(236, 245, 243) 100%);
+  background: radial-gradient(circle, rgb(252, 253, 255) 0%, rgb(236, 245, 243) 100%);
   font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
@@ -40,3 +40,34 @@ td {
  font-size: .7rem;
  font-weight: 200;
 }
+
+.input-field {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  appearance: none; /* Removes default select arrow */
+}
+
+select:focus {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}
+

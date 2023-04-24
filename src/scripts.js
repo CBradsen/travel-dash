@@ -11,6 +11,19 @@ import { getCurrentDate, formatDate } from './utility';
 import 'materialize-css/dist/js/materialize.min.js';
 import 'materialize-css/dist/css/materialize.min.css';
 
+document.addEventListener('DOMContentLoaded', function () {
+  const selectElement = document.getElementById('destination');
+
+  destinations.forEach((destination) => {
+    const option = document.createElement('option');
+    option.value = destination;
+    option.textContent = destination;
+    selectElement.appendChild(option);
+  });
+});
+
+
+
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import './images/lets-go-travel.jpg'
@@ -57,7 +70,7 @@ const destinationOptions = document.querySelector('#destination')
 
 // global variables
 let travelers;
-let travelerID = 41;
+let travelerID = 16;
 let travelerName; 
 let trips;
 let tripsLength;
@@ -65,7 +78,7 @@ let tripsLength;
 document.addEventListener("DOMContentLoaded", function() {
   getTravelerData(travelerID)
    .then(([allTravelersData, travelerData, destinationData, tripsData ]) => {
-    travelerID = 11;
+    travelerID = 16;
     travelers = new Travelers(allTravelersData);
     trips = new Trips(destinationData, tripsData, travelerID);
     travelers.travelerID = travelerID;
@@ -138,7 +151,7 @@ function autoFillBookTripForm() {
   userNameForm.nextElementSibling.classList.add('active');
 
   trips.destinationData.sort((a, b) => {
-    return a.destination - b.destination
+    return a.destination.localeCompare(b.destination);
   }).forEach((destination) => {
     const cities = document.createElement('option');
       cities.value = destination.id;
@@ -151,7 +164,7 @@ function autoFillBookTripForm() {
 
 function processBookTripForm(event) {
   event.preventDefault();
-  disableSubmitTripButton()
+ 
   const destinationIdNewTrip = parseInt(document.getElementById('destination').value);
   const startDate = formatDate(document.getElementById('start-date').value);
   const travelersParty = document.getElementById('travelers').value;
@@ -171,12 +184,11 @@ function processBookTripForm(event) {
     suggestedActivities: []
   }
   console.log(requestedTripData)
+  disableSubmitTripButton()
   submitNewTrip(requestedTripData)
-  
-  setTimeout(() => {
-    clearForm();
-    enableSubmitTripButton();
-}, 1000);
+  clearForm()
+  enableSubmitTripButton()
+
 }
 
 function updateEstimatedCost() {
@@ -188,7 +200,7 @@ function updateEstimatedCost() {
 }
 
 function submitNewTrip(requestedTripData) {
-  disableSubmitTripButton()
+  
   fetch("http://localhost:3001/api/v1/trips", {
     method: 'POST',
     headers: {
@@ -218,16 +230,17 @@ function submitNewTrip(requestedTripData) {
 
  
 function clearForm() {
-  document.querySelector('form').reset();
-  document.querySelector('form button[type="submit"]').removeAttribute('disabled');
+  document.querySelector('#booking-form').reset();
+ 
 }
 
 function disableSubmitTripButton() {
-  document.querySelector('form button[type="submit"]').setAttribute('disabled', 'disabled');
+  document.querySelector('#btn-form').setAttribute('disabled', true);
+  console.log("The button should be disabled now")
 }
 
 function enableSubmitTripButton() {
-    document.querySelector('form button[type="submit"]').removeAttribute('disabled');
+    document.querySelector('#btn-form').removeAttribute('disabled');
   }
 
 
