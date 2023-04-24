@@ -60,7 +60,7 @@ class Trips {
   const pastYearTrips = this.getPastTrips(userID).filter(trip => trip.date.slice(0, 4) === "2022")
   if (pastYearTrips.length === 0) {
     console.log("No trips found for that traveler")
-    return []
+    return 0
   }
   const totalCostYear = pastYearTrips.reduce((acc, trip) => {
   acc += this.calculateTotalPerTrip(trip.destinationID, trip.travelers, trip.duration)

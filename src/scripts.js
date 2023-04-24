@@ -21,6 +21,7 @@ document.getElementById('destination').addEventListener('change', updateEstimate
 document.getElementById('start-date').addEventListener('change', updateEstimatedCost);
 document.getElementById('travelers').addEventListener('input', updateEstimatedCost);
 document.getElementById('duration').addEventListener('input', updateEstimatedCost);
+const bookTripButton = document.getElementById('btn');
 
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -56,7 +57,7 @@ const destinationOptions = document.querySelector('#destination')
 
 // global variables
 let travelers;
-let travelerID = 22;
+let travelerID = 41;
 let travelerName; 
 let trips;
 let tripsLength;
@@ -64,10 +65,10 @@ let tripsLength;
 document.addEventListener("DOMContentLoaded", function() {
   getTravelerData(travelerID)
    .then(([allTravelersData, travelerData, destinationData, tripsData ]) => {
-    travelerID = 22
-    travelers = new Travelers(allTravelersData)
-    trips = new Trips(destinationData, tripsData, travelerID)
-    travelers.travelerID = travelerID
+    travelerID = 11;
+    travelers = new Travelers(allTravelersData);
+    trips = new Trips(destinationData, tripsData, travelerID);
+    travelers.travelerID = travelerID;
     tripsLength = tripsData.trips.length;
 
     renderWelcome();
@@ -100,15 +101,16 @@ function renderPastTrips(travelerID) {
 };
 
 function renderFutureTrips(travelerID) {
-  const usersFutureTrips = trips.getFutureTripsAll(travelerID);
   futureTripsTable.innerHTML = '';
+  const usersFutureTrips = trips.getFutureTripsAll(travelerID);
+  
   usersFutureTrips.forEach((trip) => {
   const newFutureRow = futureTripsTable.insertRow();
   const dateCell = newFutureRow.insertCell(0);
   const cityCell = newFutureRow.insertCell(1);
   const daysCell = newFutureRow.insertCell(2);
   const partyCell = newFutureRow.insertCell(3);
-  const statusCell = newFutureRow.inserCell(4);
+  const statusCell = newFutureRow.insertCell(4);
 
   dateCell.innerHTML = trip.date;
   cityCell.innerHTML = trips.getDestination(trip.destinationID);
@@ -149,7 +151,7 @@ function autoFillBookTripForm() {
 
 function processBookTripForm(event) {
   event.preventDefault();
-
+  
   const destinationIdNewTrip = parseInt(document.getElementById('destination').value);
   const startDate = formatDate(document.getElementById('start-date').value);
   
@@ -170,6 +172,8 @@ function processBookTripForm(event) {
   }
   console.log(requestedTripData)
   submitNewTrip(requestedTripData)
+  
+  
 }
 
 function updateEstimatedCost() {
@@ -192,12 +196,18 @@ function submitNewTrip(requestedTripData) {
   .then(response => response.json())
   .then(data => {
     console.log("New trip was successfully posted", data)
+    return fetch("http://localhost:3001/api/v1/trips").then(handleResponse);
+  })
+  .then(tripsData => {
+    trips.tripData = tripsData.trips;
+    renderFutureTrips(travelerID);
   })
   .catch((error) => {
     console.error('Error', error);
-  })
+  });
 }
 
 
+  
 
 
