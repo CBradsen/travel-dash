@@ -10,8 +10,14 @@ function getCurrentDate() {
 
 function formatDate(dateString) {
   const dateBefore = new Date(dateString);
-  const formattedDate = dateBefore.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-  return formattedDate;
+  const formattedDate = dateBefore.toLocaleDateString("en-CA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+  return formattedDate.replace(/-/g, '/');
 }
+
+// .replaceAll("/", "-")
 
 

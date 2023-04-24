@@ -3,31 +3,40 @@ body {
   font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
+main (
+  
+)
+
 #login-img {
   width: 15%;
 }
 
+#booking-form {
+  max-width: 30%;
+}
+
 .trip-table {
-  border: .09em solid;
+  border: .09rem solid;
   border-color:rgb(26, 9, 9);
   border-collapse: collapse;
+  max-width: 30%
 }
 
 th, td {
   text-align: left;
-  border: .09em solid;
+  border: .09rem solid;
   border-color:rgb(26, 9, 9);
-  padding-right: .6em;
-  padding-left: .3em;
+  padding-right: .6rem;
+  padding-left: .3rem;
   border-collapse: collapse;
 }
 
 th {
-  font-size: 1em;
+  font-size: 1rem;
   font-weight: 400;
 }
 
 td {
- font-size: .7em;
+ font-size: .7rem;
  font-weight: 200;
 }

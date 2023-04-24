@@ -57,21 +57,24 @@ class Trips {
   }
 
   calculateLastYearTotalClient(userID) {
-
   const pastYearTrips = this.getPastTrips(userID).filter(trip => trip.date.slice(0, 4) === "2022")
-
   if (pastYearTrips.length === 0) {
     console.log("No trips found for that traveler")
-    return []
+    return 0
   }
-
   const totalCostYear = pastYearTrips.reduce((acc, trip) => {
   acc += this.calculateTotalPerTrip(trip.destinationID, trip.travelers, trip.duration)
 
-  return acc
+  return Math.round(acc)
   }, 0)
-return totalCostYear
+  return totalCostYear
   }
+
+  estimateTripCost(destinationIdNewTrip, travelersParty, daysNewTrip) {
+    const city = this.destinationData.find(city => city.id === destinationIdNewTrip)
+    const tripCost = (city.estimatedFlightCostPerPerson * travelersParty) + (city.estimatedLodgingCostPerDay * daysNewTrip)
+  return Math.round(tripCost * 1.1)
+  };
 
 };
 
