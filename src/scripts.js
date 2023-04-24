@@ -151,13 +151,13 @@ function autoFillBookTripForm() {
 
 function processBookTripForm(event) {
   event.preventDefault();
-  
+  disableSubmitTripButton()
   const destinationIdNewTrip = parseInt(document.getElementById('destination').value);
   const startDate = formatDate(document.getElementById('start-date').value);
-  
   const travelersParty = document.getElementById('travelers').value;
   const daysNewTrip = document.getElementById('duration').value; 
   const estimatedCost = trips.estimateTripCost(destinationIdNewTrip, travelersParty, daysNewTrip);
+  
   document.getElementById('estimated-cost').value = `${estimatedCost}`
   
   const requestedTripData = {
@@ -173,7 +173,10 @@ function processBookTripForm(event) {
   console.log(requestedTripData)
   submitNewTrip(requestedTripData)
   
-  
+  setTimeout(() => {
+    clearForm();
+    enableSubmitTripButton();
+}, 1000);
 }
 
 function updateEstimatedCost() {
@@ -185,6 +188,7 @@ function updateEstimatedCost() {
 }
 
 function submitNewTrip(requestedTripData) {
+  disableSubmitTripButton()
   fetch("http://localhost:3001/api/v1/trips", {
     method: 'POST',
     headers: {
@@ -203,11 +207,27 @@ function submitNewTrip(requestedTripData) {
     renderFutureTrips(travelerID);
   })
   .catch((error) => {
-    console.error('Error', error);
+    if (error.message === '422') {
+    alert("We're having a problem gathering your information. Please check your trip requests and try again.")
+    } else {
+    console.error("Error posting the data", error);
+    alert('Error processing your trip request. Please try again later or call the Lets Go! office to have someone help you book your trip. We want to make your next adventure the best yet!');
+    }
   });
 }
 
+ 
+function clearForm() {
+  document.querySelector('form').reset();
+  document.querySelector('form button[type="submit"]').removeAttribute('disabled');
+}
 
-  
+function disableSubmitTripButton() {
+  document.querySelector('form button[type="submit"]').setAttribute('disabled', 'disabled');
+}
+
+function enableSubmitTripButton() {
+    document.querySelector('form button[type="submit"]').removeAttribute('disabled');
+  }
 
 
