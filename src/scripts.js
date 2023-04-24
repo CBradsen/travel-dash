@@ -34,9 +34,7 @@ const futureTripsTable = document.querySelector('#future-trips tbody');
 const welcomeName = document.querySelector('h1');
 const amountSpent = document.querySelector('#amount-spent');
 const destinationsForm = document.querySelector('select');
-
 const calendarForm = document.querySelector('.datepicker');
-
 const userNameForm = document.querySelector('#user-name');
 const destinationOptions = document.querySelector('#destination')
 
@@ -50,7 +48,7 @@ let tripsLength;
 document.addEventListener("DOMContentLoaded", function() {
   getTravelerData(travelerID)
    .then(([allTravelersData, travelerData, destinationData, tripsData ]) => {
-    travelerID = 18;
+    travelerID = 28;
     travelers = new Travelers(allTravelersData);
     trips = new Trips(destinationData, tripsData, travelerID);
     travelers.travelerID = travelerID;
@@ -66,20 +64,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 });
-
-// document.addEventListener('DOMContentLoaded', function () {
-//   const selectElement = document.getElementById('destination');
-
-//   destinations.forEach((destination) => {
-//     const option = document.createElement('option');
-//     option.value = destination;
-//     option.textContent = destination;
-//     selectElement.appendChild(option);
-//   });
-
-//   const destinationInput = document.querySelector('input.select-dropdown');
-//   destinationInput.setAttribute('aria-labelledby', 'destination-label');
-// });
 
 function renderPastTrips(travelerID) {
   pastTripsTable.innerHTML = '';
