@@ -10,16 +10,18 @@ class Travelers {
   }
 
   findIdWithLogin(username) {
-    if (username.startsWith("traveler", 0, 8)) {
-   const currentID = parseInt(username.slice(8))
+    if (username.startsWith("traveler", 0, 8))  {
+    const currentID = parseInt(username.slice(8))
+    if (currentID > 0 && currentID < 51) {
+      this.travelerID = currentID
+      return "Sucessful login"
     }
-   if (currentID > 0 && currentID < 51) {
-    this.travelerID = currentID
    } else {
-      alert("Not a valid username. Please try again")
-      return "That is not a valid username. Please try again"
+     
+      return 'That is not a valid username. Please try again';
+    
     }
-   return currentID
+  
   }
 
   getTravelersFullName() {
