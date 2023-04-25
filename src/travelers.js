@@ -17,11 +17,8 @@ class Travelers {
       return "Sucessful login"
     }
    } else {
-     
       return 'That is not a valid username. Please try again';
-    
     }
-  
   }
 
   getTravelersFullName() {
@@ -29,7 +26,7 @@ class Travelers {
     if (person) {
     this.travelerFullName = person.name
     } else {
-      console.log("No traveler found")
+      return("No traveler found")
     }
     return this.travelerFullName
   }
