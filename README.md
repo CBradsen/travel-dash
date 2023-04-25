@@ -1,90 +1,44 @@
 # Travel-dash
 Using fetch APIs, this app creates a homing station for your travels and adventures. With booking from the fictional, "Let's Go!" Travel agencey, your next trip is just a few clicks away. See where you've been in the past. View your upcoming trips. Even see how much money you spent traveling last year. 
 
-## 
+![image](https://user-images.githubusercontent.com/117617970/234382209-0ffe8f5c-8d19-4a02-a0ef-bbd1701199c0.png)
+![image](https://user-images.githubusercontent.com/117617970/234382545-a9766346-389f-4f7a-8cf1-9281fe90639a.png)
 
+## Project Goals 
+* Use OOP to drive the design of the application and the code
+* Work with an API to send and receive data
+* Solidify the code review process
+* Create a robust test suite that thoroughly tests all functionality of a client-side application
 
+## Project Context
+This solo project was completed over 6 days while a student at the Turing School of Software & Desgin.
+
+## Technologies
+* Fetch API to retrieve and add data
+* Mocha and Chai for testing code (TDD implemented)
+* Javascript
+* HTML, CSSS
+* For testing accessibility: Lighthouse, Wave, and screen-reader.
 
 ## Setup
-1. Clone down this repo. 
-Then install the library dependencies. Run:
+1. You'll want to fork and clone down this repo to your terminal.
+2. Inside your terminal: cd into the file.
+3. Type in npm install.
+4. Type in npm start.
+5. Cut and paste: http://localhost:8080/ in a separate tab in your browser. (You won't see anything until you set up the local server).
+6. In a separte terminal tab or window you will set up the local server to run in the background, by doing this:  
+7. Clone the local server from travel-tracker-api (Find it here: https://github.com/turingschool-examples/travel-tracker-api
+8. cd into the file.
+9. Run npm install and then npm start
+10. Server will be located at http://localhost:3001. It will run in the background. 
+  
+## Wins, Challenges overcome, Next steps
+After only a few months of learning to code, this was the largest project I have built to date. 
+Using fetch to get and post data from apis was a win.
+Anticipating sad paths a user could take and trying to account for all possible errors was a challenge. 
+I began the project using materializecss, but removed it when I could not adapt it to meet the accessibility markers required. 
+While that left a simple design in it's place, the power behind the page to effectively take in and manipulate data remained.
+It would be fun to write more css in the futre to present a modern and professional site design. 
 
-```bash
-npm install
-```
+  
 
-To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:8080/` and you should see a page with the Turing logo image and a beautiful gradient background. If that's the case, you're good to go. Enter `control + c` in your terminal to stop the server at any time.
-
-## Where to Add Your Code
-
-### JavaScript
-
-You have to be very intentional with where you add your feature code. This repo uses a tool called [webpack](https://webpack.js.org/) to combine many JavaScript files into one big file. Webpack enables you to have many, separate JavaScript files to keep your code organized and readable. Webpack expects all of your code files to be in a specific place, or else it doesn't know how to combine them all behind the scenes.
-
-**Create all of your feature code files in the `src` directory.**
-
-Since code is separated into multiple files, you need to use the `import` and `export` syntax to share code across file.
-
-Here is a video that walks through some information about [import and export](https://www.youtube.com/watch?v=_3oSWwapPKQ). There are a lot of resources out there about `import` and `export`, and resources will sometimes call them `ES6 modules`. It's something you will see in React and beyond.
-
-### HTML
-
-Add the HTML you need in the `index.html` file in the `./dist` directory. There is some boilerplate HTML that exists from the start that you can modify.
-
-### Images
-
-Add your image files in the `src/images` directory. Similar to CSS files, you need to `import` image files in the JavaScript entry file (`scripts.js`). Then go into the HTML and add an `img` element with the `src` attribute pointing to the `images` directory. There is an example in the `index.html` file for you to see.
-
-## How to View Your Code in Action
-
-In the terminal, run:
-
-```bash
-npm start
-```
-
-You will see a bunch of lines output to your terminal. One of those lines will be something like:
-
-```bash
-Project is running at http://localhost:8080/
-```
-
-Go to `http://localhost:8080/` in your browser to view your code running in the browser.
-
----
-
-## Test Files Organization
-
-Similar to feature code, your test code needs to be put in a specific place for it to run successfully.
-
-**Put all of your test files in the `test` directory.** As a convention, all test filenames should end with `-test.js`. For instance: `box-test.js`.
-
-## Running Your Tests
-
-Run your test suite using the command:
-
-```bash
-npm test
-```
-
-The test results will output to the terminal.
-
----
-
-## Linting Your Code
-
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit - the linter is still running successfully.
-
-Your linter will look at the JavaScript files you have within the `src` directory and the `test` directory.
-
-## Webpack?
-
-If you look in the `package.json` file, you'll see one of the library dependencies called `webpack`. If you're interested in learning more about what Webpack is and how it works behind the scenes, take a look through the [Webpack configuration documentation](https://webpack.js.org/concepts/).
-
-## Deploying to GitHub Pages
-
-_If you are finished with the functionality and testing of your project_, then you can consider deploying your project to the web! This way anyone can play it without cloning down your repo.
-
-[GitHub Pages](https://pages.github.com/) is a great way to deploy your project to the web. Don't worry about this until your project is free of bugs and well tested!
-
-If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages.
