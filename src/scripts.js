@@ -6,9 +6,6 @@ import { getTravelerData, handleResponse } from './api-calls';
 import Travelers from './travelers';
 import Trips from './trips';
 import { getCurrentDate, formatDate } from './utility';
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
 import './images/lets-go-travel.jpg'
 
 // Event Listeners
@@ -35,7 +32,8 @@ const destinationsForm = document.querySelector('select');
 const calendarForm = document.querySelector('.datepicker');
 const userNameForm = document.querySelector('#user-name');
 const destinationOptions = document.querySelector('#destination');
-const loginForm = document.querySelector(".login-form");
+const loginPage = document.querySelector(".login-container");
+const loginForm = document.querySelector('.login-form')
 const contentAfterLogin = document.querySelector(".content-after-login");
 
 // global variables
@@ -45,9 +43,6 @@ let travelerName;
 let trips;
 let tripsLength;
 
-// window.addEventListener('load', function() {
-//   // your code here
-// });
 loginForm.addEventListener("submit", verifyLogin);
 
 function verifyLogin(event) {
@@ -55,11 +50,16 @@ function verifyLogin(event) {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
   if (password === "traveler") {
-    checkUsername(username);
+    travelerID = checkUsername(username);
   } else {
     alert("Incorrect password");
   }
-  contentAfterLogin.classList.remove("hidden");
+  if (travelerID) {
+      fetchTravelerData(travelerID)
+      loginPage.classList.add("hidden")
+      contentAfterLogin.classList.remove("hidden");
+      
+    }
   console.log(username, password);
 }
 
@@ -67,33 +67,30 @@ function checkUsername(username) {
     if (username.startsWith("traveler")) {
     const currentID = parseInt(username.slice(8));
      if (currentID > 0 && currentID < 51) {
-    travelerID = currentID
+    return currentID
    } else {
       alert("Not a valid username. Please try again")
-      return "That is not a valid username. Please try again"
+      return null;
     }
   }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+function fetchTravelerData(travelerID) {
   getTravelerData(travelerID)
-   .then(([allTravelersData, travelerData, destinationData, tripsData ]) => {
-    travelerID = 28;
+   .then(([allTravelersData, destinationData, tripsData ]) => {
+  
     travelers = new Travelers(allTravelersData);
     trips = new Trips(destinationData, tripsData, travelerID);
     travelers.travelerID = travelerID;
     tripsLength = tripsData.trips.length;
-// console.log(allTravelersData, travelerData, destinationData, tripsData)
 
     renderWelcome();
     renderPastTrips(travelerID);
     renderFutureTrips(travelerID);
     renderAmountSpent(travelerID);
     autoFillBookTripForm();
-   
-
 });
-});
+};
 
 function renderPastTrips(travelerID) {
   pastTripsTable.innerHTML = '';
