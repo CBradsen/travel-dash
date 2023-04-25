@@ -46,6 +46,7 @@ let tripsLength;
 loginForm.addEventListener("submit", verifyLogin);
 
 function verifyLogin(event) {
+  console.log("verifyLogin function beginning")
   event.preventDefault(); 
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
@@ -55,10 +56,11 @@ function verifyLogin(event) {
     alert("Incorrect password");
   }
   if (travelerID) {
-      fetchTravelerData(travelerID)
-      loginPage.classList.add("hidden")
+      console.log(`This is the travelerID: ${travelerID}`)
       contentAfterLogin.classList.remove("hidden");
       
+      loginPage.style.display = "none";
+      fetchTravelerData(travelerID)
     }
   console.log(username, password);
 }
@@ -83,7 +85,7 @@ function fetchTravelerData(travelerID) {
     trips = new Trips(destinationData, tripsData, travelerID);
     travelers.travelerID = travelerID;
     tripsLength = tripsData.trips.length;
-
+    console.log(trips, travelers)
     renderWelcome();
     renderPastTrips(travelerID);
     renderFutureTrips(travelerID);
