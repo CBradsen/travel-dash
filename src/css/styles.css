@@ -1,15 +1,37 @@
 body {
   background: radial-gradient(circle, rgb(252, 253, 255) 0%, rgb(236, 245, 243) 100%);
   font-family: 'Atkinson Hyperlegible', sans-serif;
+  height: 100%;
 }
 
-main (
-  
-)
-
-#login-img {
-  width: 15%;
+.background-image {
+  background-image: url("../images/lets-go-travel.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
 }
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+}
+
+h1 {
+  text-align: left;
+}
+
+.login-form {
+  max-width: 400px;
+  width: 100%;
+  margin: 20px;
+  text-align: center;
+}
+
 
 #booking-form {
   max-width: 30%;

@@ -25,25 +25,51 @@ document.addEventListener('DOMContentLoaded', function () {
   startDate.setAttribute('min', today);
 });
 
-
-
 document.getElementById('booking-form').addEventListener('submit', processBookTripForm);
 
 const pastTripsTable = document.querySelector('#past-trips tbody');
 const futureTripsTable = document.querySelector('#future-trips tbody');
-const welcomeName = document.querySelector('h1');
+const welcomeName = document.querySelector('h2');
 const amountSpent = document.querySelector('#amount-spent');
 const destinationsForm = document.querySelector('select');
 const calendarForm = document.querySelector('.datepicker');
 const userNameForm = document.querySelector('#user-name');
 const destinationOptions = document.querySelector('#destination')
+const loginForm = document.querySelector("login")
 
 // global variables
 let travelers;
-let travelerID = 16;
+let travelerID;
 let travelerName; 
 let trips;
 let tripsLength;
+
+loginForm.addEventListener("submit", verifyLogin);
+
+function verifyLogin(event) {
+  event.preventDefault(); 
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  if (password === "traveler") {
+    checkUsername(username);
+  }
+  console.log(username, password);
+  
+}
+
+function checkUsername(username) {
+    if (username.startsWith("traveler", 0, 8)) {
+   const currentID = parseInt(username.slice(8))
+    }
+   if (currentID > 0 && < 51) {
+    travelerID = currentID
+   } else {
+      alert("Not a valid username. Please try again")
+      return "That is not a valid username. Please try again"
+    }
+   
+  }
+
 
 document.addEventListener("DOMContentLoaded", function() {
   getTravelerData(travelerID)
