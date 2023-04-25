@@ -7,9 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
-
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
   <title>Let's Go Travel Adventures</title>
 </head>
 <body>
@@ -35,6 +33,7 @@
   </div>
   <main>
     <div class="content-after-login hidden">
+      <div class="top-main-page">
       <h2>Let's go travel!</h1>
       <h3>Your Future Trips</h2>
       <table class="trip-table striped highlight" id="future-trips">
@@ -51,14 +50,14 @@
           <tr>
           </tr>
         </tbody>
-      </table>
-   
-<div>
+      </table> 
+<div class="book-form">
   <h3>Book your next adventure!</h2>
   <form id="booking-form">
     <div class="input-field">
-      <input id="user-name" type="text" readonly />
       <label for="user-name">Your Name</label>
+      <br>
+      <input id="user-name" type="text" readonly />
     </div>
     <div class="input-field">
       <label for="destination" id="destination-label">Choose your destination</label>
@@ -66,10 +65,10 @@
         <option value="" disabled selected>Select an option</option>
       </select>
     </div>
+    <br>
     <div class="input-field">
       <label for="start-date">Departure date</label>
-      <input id="start-date" type="date" name="trip-start" required
-      min="today" max="2025-12-31"/>
+      <input id="start-date" type="date" name="trip-start" required max="2025-12-31"/>
     </div>
     <div class="input-field">
       <input id="duration" type="number" min="1" max="60" required/>
@@ -80,16 +79,20 @@
       <label for="travelers">How many people?</label>
     </div>
     <div class="input-field active">
-      <input id="estimated-cost" type="text" readonly />
+      <br>
       <label for="estimated-cost" aria-label="estimated-cost" class="active">Your estimated Cost</label>
+      <input id="estimated-cost" type="text" readonly />
+      <br>
     </div>
-    <button id="btn-form" class="btn waves-effect waves-light" type="submit" name="action">
+    <br>
+    <button id="btn-form" class="btn" type="submit" name="action">
       Let's Go! Book it!
     </button>
   </form>
 </div>
+</div>
     <div>
-      <h3>My Past Trips</h2>
+      <h3>Your Past Trips</h2>
       <table class="trip-table" id="past-trips">
         <thead>
           <th>Dates</th>

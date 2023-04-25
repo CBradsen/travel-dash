@@ -13,12 +13,10 @@ class Trips {
    const now = getCurrentDate();
    const pastTrips = (this.tripData.filter(trip => trip.userID === userID && trip.date < now))
    if (pastTrips.length === 0) {
-    console.log("No past trips found.") 
     return [];
    } else {
     return pastTrips
    }
-   
   }
 
   getDestination(destinationID) {
@@ -28,14 +26,12 @@ class Trips {
     return "That destinationID doesn't exist in our database"
    }
    return city.destination
-   
   }
 
   getFutureTripsAll(userID) {
     const now = getCurrentDate();
-    const futureTrips = (this.tripData.filter(trip => trip.userID === userID && trip.date > now))
+    const futureTrips = (this.tripData.filter(trip => trip.userID === userID && trip.date >= now))
     if (!futureTrips) {
-      console.log("No future trips found.")
       return "No future trips found."
     }
     return futureTrips
@@ -44,30 +40,22 @@ class Trips {
   getPendingTrips(userID) {
     const pendingTrips = this.getFutureTripsAll(userID).filter(trip => trip.status === "pending")
     if(pendingTrips.length === 0) {
-      console.log("No pending trips found.")
       return "No pending trips found."
     }
    return (pendingTrips)
   }
 
-  calculateTotalPerTrip(destinationID, travelers, duration) {
-    const city = this.destinationData.find(city => city.id === destinationID)
-    const tripCost = (city.estimatedFlightCostPerPerson * travelers) + (city.estimatedLodgingCostPerDay * duration)
-  return tripCost * 1.1
-  }
-
   calculateLastYearTotalClient(userID) {
-  const pastYearTrips = this.getPastTrips(userID).filter(trip => trip.date.slice(0, 4) === "2022")
-  if (pastYearTrips.length === 0) {
-    console.log("No trips found for that traveler")
-    return 0
-  }
-  const totalCostYear = pastYearTrips.reduce((acc, trip) => {
-  acc += this.calculateTotalPerTrip(trip.destinationID, trip.travelers, trip.duration)
+    const pastYearTrips = this.getPastTrips(userID).filter(trip => trip.date.slice(0, 4) === "2022")
+    if (pastYearTrips.length === 0) {
+      return 0
+    }
+    const totalCostYear = pastYearTrips.reduce((acc, trip) => {
+    acc += this.estimateTripCost(trip.destinationID, trip.travelers, trip.duration)
 
-  return Math.round(acc)
-  }, 0)
-  return totalCostYear
+    return Math.round(acc)
+    }, 0)
+    return totalCostYear
   }
 
   estimateTripCost(destinationIdNewTrip, travelersParty, daysNewTrip) {

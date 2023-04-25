@@ -1,4 +1,4 @@
-export { getCurrentDate, formatDate };
+export { getCurrentDate, formatDate, setTomorrowDate };
 
 function getCurrentDate() {
   const date = new Date();
@@ -18,6 +18,14 @@ function formatDate(dateString) {
   return formattedDate.replace(/-/g, '/');
 }
 
-// .replaceAll("/", "-")
+function setTomorrowDate() {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  return tomorrow.toISOString().slice(0, 10);
+}
+
+
 
 

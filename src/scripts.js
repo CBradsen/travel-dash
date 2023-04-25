@@ -1,28 +1,10 @@
-
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
 import { getTravelerData, handleResponse } from './api-calls';
 import Travelers from './travelers';
 import Trips from './trips';
-import { getCurrentDate, formatDate } from './utility';
+import { getCurrentDate, formatDate, setTomorrowDate } from './utility';
 import './images/lets-go-travel.jpg'
 
-// Event Listeners
-
-document.getElementById('destination').addEventListener('change', updateEstimatedCost);
-document.getElementById('start-date').addEventListener('change', updateEstimatedCost);
-document.getElementById('travelers').addEventListener('input', updateEstimatedCost);
-document.getElementById('duration').addEventListener('input', updateEstimatedCost);
-const bookTripButton = document.getElementById('btn');
-
-document.addEventListener('DOMContentLoaded', function () {
-  const startDate = document.getElementById('start-date');
-  const today = new Date().toISOString().split('T')[0];
-  startDate.setAttribute('min', today);
-});
-
-document.getElementById('booking-form').addEventListener('submit', processBookTripForm);
 
 const pastTripsTable = document.querySelector('#past-trips tbody');
 const futureTripsTable = document.querySelector('#future-trips tbody');
@@ -35,34 +17,40 @@ const destinationOptions = document.querySelector('#destination');
 const loginPage = document.querySelector(".login-container");
 const loginForm = document.querySelector('.login-form')
 const contentAfterLogin = document.querySelector(".content-after-login");
+const startDateInput = document.getElementById("start-date");
+const bookTripButton = document.getElementById('btn');
+
+// Event Listeners
+document.getElementById('destination').addEventListener('change', updateEstimatedCost);
+document.getElementById('start-date').addEventListener('change', updateEstimatedCost);
+document.getElementById('travelers').addEventListener('input', updateEstimatedCost);
+document.getElementById('duration').addEventListener('input', updateEstimatedCost);
+document.getElementById('booking-form').addEventListener('submit', processBookTripForm);
+loginForm.addEventListener("submit", verifyLogin);
+
+startDateInput.setAttribute("min", setTomorrowDate());
+
 
 // global variables
 let travelers;
 let travelerID;
-let travelerName; 
 let trips;
 let tripsLength;
 
-loginForm.addEventListener("submit", verifyLogin);
-
 function verifyLogin(event) {
-  console.log("verifyLogin function beginning")
   event.preventDefault(); 
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
   if (password === "travel") {
     travelerID = checkUsername(username);
   } else {
-    alert("Incorrect password");
+    alert("Incorrect password or username, please try again. Remember: Username and password are case sensitive.");
   }
   if (travelerID) {
-      console.log(`This is the travelerID: ${travelerID}`)
       contentAfterLogin.classList.remove("hidden");
-      
       loginPage.style.display = "none";
       fetchTravelerData(travelerID)
     }
-  console.log(username, password);
 }
 
 function checkUsername(username) {
@@ -71,7 +59,7 @@ function checkUsername(username) {
      if (currentID > 0 && currentID < 51) {
     return currentID
    } else {
-      alert("Not a valid username. Please try again")
+      alert("Not a valid username. Please try again. Remember: Username is case sensitive.")
       return null;
     }
   }
@@ -80,12 +68,11 @@ function checkUsername(username) {
 function fetchTravelerData(travelerID) {
   getTravelerData(travelerID)
    .then(([allTravelersData, destinationData, tripsData ]) => {
-  
     travelers = new Travelers(allTravelersData);
     trips = new Trips(destinationData, tripsData, travelerID);
     travelers.travelerID = travelerID;
     tripsLength = tripsData.trips.length;
-    console.log(trips, travelers)
+    
     renderWelcome();
     renderPastTrips(travelerID);
     renderFutureTrips(travelerID);
@@ -97,7 +84,7 @@ function fetchTravelerData(travelerID) {
 function renderPastTrips(travelerID) {
   pastTripsTable.innerHTML = '';
   const usersPastTrips = trips.getPastTrips(travelerID)
-  
+
   usersPastTrips.forEach((trip) => { 
   const newPastRow = pastTripsTable.insertRow();
   const dateCell = newPastRow.insertCell(0);
@@ -109,7 +96,6 @@ function renderPastTrips(travelerID) {
   cityCell.innerHTML = trips.getDestination(trip.destinationID);
   daysCell.innerHTML = trip.duration;
   partyCell.innerHTML = trip.travelers;
-
 }) 
 };
 
@@ -130,7 +116,6 @@ function renderFutureTrips(travelerID) {
   daysCell.innerHTML = trip.duration;
   partyCell.innerHTML = trip.travelers;
   statusCell.innerHTML = trip.status;
-
 })
 };
 
@@ -142,13 +127,11 @@ function renderWelcome() {
 
 function renderAmountSpent(travelerID) {
   const amount = trips.calculateLastYearTotalClient(travelerID)
-console.log(amount)
   amountSpent.innerHTML = `You spent $${amount} traveling in 2022`
 }
 
 function autoFillBookTripForm() {
   userNameForm.value = travelers.getTravelersFullName()
-  userNameForm.nextElementSibling.classList.add('active');
 
   trips.destinationData.sort((a, b) => {
     return a.destination.localeCompare(b.destination);
@@ -157,9 +140,7 @@ function autoFillBookTripForm() {
       cities.value = destination.id;
       cities.textContent = destination.destination;
       destinationOptions.appendChild(cities);
-  })
-  
-
+  }) 
 };
 
 function processBookTripForm(event) {
@@ -183,12 +164,10 @@ function processBookTripForm(event) {
     status: "pending",
     suggestedActivities: []
   }
-  console.log(requestedTripData)
-  disableSubmitTripButton()
-  submitNewTrip(requestedTripData)
-  clearForm()
-  enableSubmitTripButton()
-
+    disableSubmitTripButton()
+    submitNewTrip(requestedTripData)
+    resetForm()
+    enableSubmitTripButton()
 }
 
 function updateEstimatedCost() {
@@ -211,7 +190,7 @@ function submitNewTrip(requestedTripData) {
   })
   .then(response => response.json())
   .then(data => {
-    console.log("New trip was successfully posted", data)
+    console.log("New trip was successfully posted")
     return fetch("http://localhost:3001/api/v1/trips").then(handleResponse);
   })
   .then(tripsData => {
@@ -227,16 +206,14 @@ function submitNewTrip(requestedTripData) {
     }
   });
 }
-
  
-function clearForm() {
+function resetForm() {
   document.querySelector('#booking-form').reset();
- 
+  autoFillBookTripForm()
 }
 
 function disableSubmitTripButton() {
   document.querySelector('#btn-form').setAttribute('disabled', true);
-  console.log("The button should be disabled now")
 }
 
 function enableSubmitTripButton() {
