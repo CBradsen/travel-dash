@@ -1,5 +1,5 @@
 # Travel-dash
-Using fetch APIs, this app creates a homing station for your travels and adventures.
+Using fetch APIs, this app creates a homing station for your travels and adventures. With booking from the fictional, "Let's Go!" Travel agencey, your next trip is just a few clicks away. See where you've been in the past. View your upcoming trips. Even see how much money you spent traveling last year. 
 
 ## 
 
