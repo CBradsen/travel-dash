@@ -26,7 +26,6 @@ class Trips {
     return "That destinationID doesn't exist in our database"
    }
    return city.destination
-   
   }
 
   getFutureTripsAll(userID) {
@@ -47,16 +46,16 @@ class Trips {
   }
 
   calculateLastYearTotalClient(userID) {
-  const pastYearTrips = this.getPastTrips(userID).filter(trip => trip.date.slice(0, 4) === "2022")
-  if (pastYearTrips.length === 0) {
-    return 0
-  }
-  const totalCostYear = pastYearTrips.reduce((acc, trip) => {
-  acc += this.estimateTripCost(trip.destinationID, trip.travelers, trip.duration)
+    const pastYearTrips = this.getPastTrips(userID).filter(trip => trip.date.slice(0, 4) === "2022")
+    if (pastYearTrips.length === 0) {
+      return 0
+    }
+    const totalCostYear = pastYearTrips.reduce((acc, trip) => {
+    acc += this.estimateTripCost(trip.destinationID, trip.travelers, trip.duration)
 
-  return Math.round(acc)
-  }, 0)
-  return totalCostYear
+    return Math.round(acc)
+    }, 0)
+    return totalCostYear
   }
 
   estimateTripCost(destinationIdNewTrip, travelersParty, daysNewTrip) {

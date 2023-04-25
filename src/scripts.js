@@ -34,10 +34,8 @@ startDateInput.setAttribute("min", setTomorrowDate());
 // global variables
 let travelers;
 let travelerID;
-let travelerName; 
 let trips;
 let tripsLength;
-
 
 function verifyLogin(event) {
   event.preventDefault(); 
@@ -46,14 +44,13 @@ function verifyLogin(event) {
   if (password === "travel") {
     travelerID = checkUsername(username);
   } else {
-    alert("Incorrect password or username, please try again.");
+    alert("Incorrect password or username, please try again. Remember: Username and password are case sensitive.");
   }
   if (travelerID) {
       contentAfterLogin.classList.remove("hidden");
       loginPage.style.display = "none";
       fetchTravelerData(travelerID)
     }
-  
 }
 
 function checkUsername(username) {
@@ -62,7 +59,7 @@ function checkUsername(username) {
      if (currentID > 0 && currentID < 51) {
     return currentID
    } else {
-      alert("Not a valid username. Please try again")
+      alert("Not a valid username. Please try again. Remember: Username is case sensitive.")
       return null;
     }
   }
@@ -70,9 +67,7 @@ function checkUsername(username) {
 
 function fetchTravelerData(travelerID) {
   getTravelerData(travelerID)
-
    .then(([allTravelersData, destinationData, tripsData ]) => {
-
     travelers = new Travelers(allTravelersData);
     trips = new Trips(destinationData, tripsData, travelerID);
     travelers.travelerID = travelerID;
