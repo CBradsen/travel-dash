@@ -32,12 +32,11 @@ This solo project was completed over 6 days while a student at the Turing School
 10. Server will be located at http://localhost:3001. It will run in the background. 
   
 ## Wins, Challenges overcome, Next steps
-After only a few months of learning to code, this was the largest project I have built to date. 
-Using fetch to get and post data from apis was a win.
-Anticipating sad paths a user could take and trying to account for all possible errors was a challenge. 
-I began the project using materializecss, but removed it when I could not adapt it to meet the accessibility markers required. 
-While that left a simple design in it's place, the power behind the page to effectively take in and manipulate data remained.
-It would be fun to write more css in the futre to present a modern and professional site design. 
+ * After only a few months of learning to code, this was the largest project I have built to date. 
+ * Using fetch to get and post data from apis was a win.
+ * Anticipating sad paths a user could take and trying to account for all possible errors was a challenge. 
+ * I began the project using materializecss, but removed it when I could not adapt it to meet the accessibility markers required. While that left a simple design in it's place, the power behind the page to effectively take in and manipulate data remained.
+ * It would be fun to write more css in the futre to present a modern and professional site design. 
 
 ![image](https://user-images.githubusercontent.com/117617970/234382545-a9766346-389f-4f7a-8cf1-9281fe90639a.png)
   
