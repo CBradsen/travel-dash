@@ -49,7 +49,7 @@ function verifyLogin(event) {
   event.preventDefault(); 
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
-  if (password === "traveler") {
+  if (password === "travel") {
     travelerID = checkUsername(username);
   } else {
     alert("Incorrect password");
