@@ -2,7 +2,6 @@
 Using fetch APIs, this app creates a homing station for your travels and adventures. With booking from the fictional, "Let's Go!" Travel agencey, your next trip is just a few clicks away. See where you've been in the past. View your upcoming trips. Even see how much money you spent traveling last year. 
 
 ![image](https://user-images.githubusercontent.com/117617970/234382209-0ffe8f5c-8d19-4a02-a0ef-bbd1701199c0.png)
-![image](https://user-images.githubusercontent.com/117617970/234382545-a9766346-389f-4f7a-8cf1-9281fe90639a.png)
 
 ## Project Goals 
 * Use OOP to drive the design of the application and the code
@@ -40,5 +39,6 @@ I began the project using materializecss, but removed it when I could not adapt 
 While that left a simple design in it's place, the power behind the page to effectively take in and manipulate data remained.
 It would be fun to write more css in the futre to present a modern and professional site design. 
 
+![image](https://user-images.githubusercontent.com/117617970/234382545-a9766346-389f-4f7a-8cf1-9281fe90639a.png)
   
 
