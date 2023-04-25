@@ -6,9 +6,6 @@ import { getTravelerData, handleResponse } from './api-calls';
 import Travelers from './travelers';
 import Trips from './trips';
 import { getCurrentDate, formatDate } from './utility';
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
 import './images/lets-go-travel.jpg'
 
 // Event Listeners
@@ -25,45 +22,77 @@ document.addEventListener('DOMContentLoaded', function () {
   startDate.setAttribute('min', today);
 });
 
-
-
 document.getElementById('booking-form').addEventListener('submit', processBookTripForm);
 
 const pastTripsTable = document.querySelector('#past-trips tbody');
 const futureTripsTable = document.querySelector('#future-trips tbody');
-const welcomeName = document.querySelector('h1');
+const welcomeName = document.querySelector('h2');
 const amountSpent = document.querySelector('#amount-spent');
 const destinationsForm = document.querySelector('select');
 const calendarForm = document.querySelector('.datepicker');
 const userNameForm = document.querySelector('#user-name');
-const destinationOptions = document.querySelector('#destination')
+const destinationOptions = document.querySelector('#destination');
+const loginPage = document.querySelector(".login-container");
+const loginForm = document.querySelector('.login-form')
+const contentAfterLogin = document.querySelector(".content-after-login");
 
 // global variables
 let travelers;
-let travelerID = 16;
+let travelerID;
 let travelerName; 
 let trips;
 let tripsLength;
 
-document.addEventListener("DOMContentLoaded", function() {
+loginForm.addEventListener("submit", verifyLogin);
+
+function verifyLogin(event) {
+  console.log("verifyLogin function beginning")
+  event.preventDefault(); 
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  if (password === "travel") {
+    travelerID = checkUsername(username);
+  } else {
+    alert("Incorrect password");
+  }
+  if (travelerID) {
+      console.log(`This is the travelerID: ${travelerID}`)
+      contentAfterLogin.classList.remove("hidden");
+      
+      loginPage.style.display = "none";
+      fetchTravelerData(travelerID)
+    }
+  console.log(username, password);
+}
+
+function checkUsername(username) {
+    if (username.startsWith("traveler")) {
+    const currentID = parseInt(username.slice(8));
+     if (currentID > 0 && currentID < 51) {
+    return currentID
+   } else {
+      alert("Not a valid username. Please try again")
+      return null;
+    }
+  }
+}
+
+function fetchTravelerData(travelerID) {
   getTravelerData(travelerID)
-   .then(([allTravelersData, travelerData, destinationData, tripsData ]) => {
-    travelerID = 28;
+   .then(([allTravelersData, destinationData, tripsData ]) => {
+  
     travelers = new Travelers(allTravelersData);
     trips = new Trips(destinationData, tripsData, travelerID);
     travelers.travelerID = travelerID;
     tripsLength = tripsData.trips.length;
-// console.log(allTravelersData, travelerData, destinationData, tripsData)
-
+    console.log(trips, travelers)
     renderWelcome();
     renderPastTrips(travelerID);
     renderFutureTrips(travelerID);
     renderAmountSpent(travelerID);
     autoFillBookTripForm();
-   
-
 });
-});
+};
 
 function renderPastTrips(travelerID) {
   pastTripsTable.innerHTML = '';

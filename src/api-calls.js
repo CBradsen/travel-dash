@@ -4,7 +4,7 @@ const toPost = "http://localhost:3001/api/v1/trips"
 export function getTravelerData(travelerID) {
   return Promise.all([
    fetch(mainURL + "travelers").then(handleResponse),
-   fetch(mainURL + "travelers/" + travelerID).then(handleResponse),
+  //  fetch(mainURL + "travelers/" + travelerID).then(handleResponse),
    fetch(mainURL + "destinations").then(handleResponse),
    fetch(mainURL + "trips").then(handleResponse)
   ])
