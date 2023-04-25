@@ -32,6 +32,9 @@ h1 {
   text-align: center;
 }
 
+.hidden {
+  display: none;
+}
 
 #booking-form {
   max-width: 30%;

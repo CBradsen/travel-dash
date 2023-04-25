@@ -13,7 +13,7 @@ class Travelers {
     if (username.startsWith("traveler", 0, 8)) {
    const currentID = parseInt(username.slice(8))
     }
-   if (currentID > 0 && < 51) {
+   if (currentID > 0 && currentID < 51) {
     this.travelerID = currentID
    } else {
       alert("Not a valid username. Please try again")

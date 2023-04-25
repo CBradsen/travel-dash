@@ -34,8 +34,9 @@ const amountSpent = document.querySelector('#amount-spent');
 const destinationsForm = document.querySelector('select');
 const calendarForm = document.querySelector('.datepicker');
 const userNameForm = document.querySelector('#user-name');
-const destinationOptions = document.querySelector('#destination')
-const loginForm = document.querySelector("login")
+const destinationOptions = document.querySelector('#destination');
+const loginForm = document.querySelector(".login-form");
+const contentAfterLogin = document.querySelector(".content-after-login");
 
 // global variables
 let travelers;
@@ -44,6 +45,9 @@ let travelerName;
 let trips;
 let tripsLength;
 
+// window.addEventListener('load', function() {
+//   // your code here
+// });
 loginForm.addEventListener("submit", verifyLogin);
 
 function verifyLogin(event) {
@@ -52,24 +56,24 @@ function verifyLogin(event) {
   const password = document.getElementById("password").value;
   if (password === "traveler") {
     checkUsername(username);
+  } else {
+    alert("Incorrect password");
   }
+  contentAfterLogin.classList.remove("hidden");
   console.log(username, password);
-  
 }
 
 function checkUsername(username) {
-    if (username.startsWith("traveler", 0, 8)) {
-   const currentID = parseInt(username.slice(8))
-    }
-   if (currentID > 0 && < 51) {
+    if (username.startsWith("traveler")) {
+    const currentID = parseInt(username.slice(8));
+     if (currentID > 0 && currentID < 51) {
     travelerID = currentID
    } else {
       alert("Not a valid username. Please try again")
       return "That is not a valid username. Please try again"
     }
-   
   }
-
+}
 
 document.addEventListener("DOMContentLoaded", function() {
   getTravelerData(travelerID)
